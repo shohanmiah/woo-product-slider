@@ -75,6 +75,8 @@ class Product_Grid_Widget extends \Elementor\Widget_Base {
 					'sale'         => esc_html__( 'Sale Products', 'custom-product-grid-slider' ),
 					'best_selling' => esc_html__( 'Best Selling', 'custom-product-grid-slider' ),
 					'top_rated'    => esc_html__( 'Top Rated', 'custom-product-grid-slider' ),
+					'related'      => esc_html__( 'Related Products', 'custom-product-grid-slider' ),
+					'cross_sell'   => esc_html__( 'Cross-Sell Products', 'custom-product-grid-slider' ),
 				),
 			)
 		);
@@ -453,6 +455,53 @@ class Product_Grid_Widget extends \Elementor\Widget_Base {
 			)
 		);
 
+		$this->add_responsive_control(
+			'image_alignment',
+			array(
+				'label'     => esc_html__( 'Alignment', 'custom-product-grid-slider' ),
+				'type'      => \Elementor\Controls_Manager::CHOOSE,
+				'options'   => array(
+					'left'   => array(
+						'title' => esc_html__( 'Left', 'custom-product-grid-slider' ),
+						'icon'  => 'eicon-text-align-left',
+					),
+					'center' => array(
+						'title' => esc_html__( 'Center', 'custom-product-grid-slider' ),
+						'icon'  => 'eicon-text-align-center',
+					),
+					'right'  => array(
+						'title' => esc_html__( 'Right', 'custom-product-grid-slider' ),
+						'icon'  => 'eicon-text-align-right',
+					),
+				),
+				'default'   => 'center',
+				'selectors' => array(
+					'{{WRAPPER}} .cpg-product-image-wrapper' => 'text-align: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			array(
+				'name'     => 'image_box_shadow',
+				'label'    => esc_html__( 'Box Shadow', 'custom-product-grid-slider' ),
+				'selector' => '{{WRAPPER}} .cpg-product-image',
+			)
+		);
+
+		$this->add_responsive_control(
+			'image_spacing',
+			array(
+				'label'      => esc_html__( 'Spacing', 'custom-product-grid-slider' ),
+				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .cpg-product-image-wrapper' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
 		$this->end_controls_section();
 
 		// Style Tab - Title.
@@ -548,6 +597,53 @@ class Product_Grid_Widget extends \Elementor\Widget_Base {
 			)
 		);
 
+		$this->add_responsive_control(
+			'price_alignment',
+			array(
+				'label'     => esc_html__( 'Alignment', 'custom-product-grid-slider' ),
+				'type'      => \Elementor\Controls_Manager::CHOOSE,
+				'options'   => array(
+					'left'   => array(
+						'title' => esc_html__( 'Left', 'custom-product-grid-slider' ),
+						'icon'  => 'eicon-text-align-left',
+					),
+					'center' => array(
+						'title' => esc_html__( 'Center', 'custom-product-grid-slider' ),
+						'icon'  => 'eicon-text-align-center',
+					),
+					'right'  => array(
+						'title' => esc_html__( 'Right', 'custom-product-grid-slider' ),
+						'icon'  => 'eicon-text-align-right',
+					),
+				),
+				'default'   => 'left',
+				'selectors' => array(
+					'{{WRAPPER}} .cpg-product-price' => 'text-align: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			array(
+				'name'     => 'price_box_shadow',
+				'label'    => esc_html__( 'Box Shadow', 'custom-product-grid-slider' ),
+				'selector' => '{{WRAPPER}} .cpg-product-price',
+			)
+		);
+
+		$this->add_responsive_control(
+			'price_spacing',
+			array(
+				'label'      => esc_html__( 'Spacing', 'custom-product-grid-slider' ),
+				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .cpg-product-price' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
 		$this->end_controls_section();
 
 		// Style Tab - Rating.
@@ -592,6 +688,27 @@ class Product_Grid_Widget extends \Elementor\Widget_Base {
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .cpg-product-rating .star-rating' => 'color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			array(
+				'name'     => 'rating_box_shadow',
+				'label'    => esc_html__( 'Box Shadow', 'custom-product-grid-slider' ),
+				'selector' => '{{WRAPPER}} .cpg-product-rating',
+			)
+		);
+
+		$this->add_responsive_control(
+			'rating_spacing',
+			array(
+				'label'      => esc_html__( 'Spacing', 'custom-product-grid-slider' ),
+				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .cpg-product-rating' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
 		);
@@ -1082,6 +1199,34 @@ class Product_Grid_Widget extends \Elementor\Widget_Base {
 				$args['meta_key'] = '_wc_average_rating';
 				$args['orderby']  = 'meta_value_num';
 				$args['order']    = 'DESC';
+				break;
+			case 'related':
+				// Get related products for current product (single product page).
+				global $product;
+				if ( is_product() && $product ) {
+					$related_ids = wc_get_related_products( $product->get_id(), $settings['products_per_page'] );
+					if ( ! empty( $related_ids ) ) {
+						$args['post__in'] = $related_ids;
+					} else {
+						$args['post__in'] = array( 0 ); // No results if no related products.
+					}
+				} else {
+					$args['post__in'] = array( 0 ); // No results if not on product page.
+				}
+				break;
+			case 'cross_sell':
+				// Get cross-sell products from cart.
+				$cart = WC()->cart;
+				if ( $cart && ! $cart->is_empty() ) {
+					$cross_sell_ids = $cart->get_cross_sells();
+					if ( ! empty( $cross_sell_ids ) ) {
+						$args['post__in'] = array_slice( $cross_sell_ids, 0, $settings['products_per_page'] );
+					} else {
+						$args['post__in'] = array( 0 ); // No results if no cross-sell products.
+					}
+				} else {
+					$args['post__in'] = array( 0 ); // No results if cart is empty.
+				}
 				break;
 		}
 
