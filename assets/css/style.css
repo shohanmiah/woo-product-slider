@@ -1,46 +1,564 @@
-/* Global Styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f5;
+/**
+ * Custom Product Grid Slider Styles
+ * Version: 2.0.0
+ */
+
+/* ==========================================================================
+   Product Grid Wrapper
+   ========================================================================== */
+
+.cpg-products-wrapper {
+	position: relative;
+	width: 100%;
+	overflow: visible;
 }
 
-/* Header Styles */
-header {
-    background-color: #333;
-    color: white;
-    padding: 10px 0;
-    text-align: center;
+/* ==========================================================================
+   Products Grid Layout
+   ========================================================================== */
+
+.cpg-products-grid {
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: minmax(0, 1fr);
+	gap: 20px;
+	width: 100%;
+	overflow: visible;
 }
 
-/* Product Slider Styles */
-.product-slider {
-    display: flex;
-    overflow: hidden;
+/* Grid mode - non-slider */
+.cpg-products-grid:not(.cpg-slider-desktop):not(.cpg-slider-mobile) {
+	grid-auto-flow: row;
 }
 
-.product-slider .slide {
-    min-width: 100%; /* Make each slide take full width */
+/* Slider mode */
+.cpg-products-grid.cpg-slider-desktop,
+.cpg-products-grid.cpg-slider-mobile {
+	overflow-x: auto;
+	overflow-y: hidden;
+	scroll-snap-type: x mandatory;
+	scroll-behavior: smooth;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: none; /* Firefox */
 }
 
-/* Button Styles */
-.btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.cpg-products-grid.cpg-slider-desktop::-webkit-scrollbar,
+.cpg-products-grid.cpg-slider-mobile::-webkit-scrollbar {
+	display: none; /* Chrome, Safari, Opera */
 }
 
-.btn:hover {
-    background-color: #0056b3;
+/* Scroll snap alignment */
+.cpg-slider-desktop .cpg-product-item,
+.cpg-slider-mobile .cpg-product-item {
+	scroll-snap-align: start;
 }
 
-/* Media Queries for Responsiveness */
-@media (max-width: 768px) {
-    .product-slider {
-        flex-direction: column; /* Stack slides vertically on small screens */
-    }
+/* ==========================================================================
+   Product Item
+   ========================================================================== */
+
+.cpg-product-item {
+	position: relative;
+	background: #fff;
+	border: 1px solid #e0e0e0;
+	border-radius: 8px;
+	overflow: hidden;
+	transition: all 0.3s ease;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+/* Equal height items */
+.cpg-products-grid {
+	align-items: stretch;
+}
+
+/* ==========================================================================
+   Item Hover Effects
+   ========================================================================== */
+
+/* Lift effect */
+.cpg-products-grid.cpg-hover-lift .cpg-product-item:hover {
+	transform: translateY(-10px);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Scale effect */
+.cpg-products-grid.cpg-hover-scale .cpg-product-item:hover {
+	transform: scale(1.05);
+	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Lift + Scale effect */
+.cpg-products-grid.cpg-hover-lift-scale .cpg-product-item:hover {
+	transform: translateY(-10px) scale(1.03);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Float effect */
+.cpg-products-grid.cpg-hover-float .cpg-product-item:hover {
+	animation: float 2s ease-in-out infinite;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes float {
+	0%, 100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-10px);
+	}
+}
+
+/* ==========================================================================
+   Product Image
+   ========================================================================== */
+
+.cpg-product-image-wrapper {
+	position: relative;
+	overflow: hidden;
+	background: #f5f5f5;
+	aspect-ratio: 1 / 1;
+}
+
+.cpg-product-image {
+	display: block;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.cpg-product-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: all 0.5s ease;
+}
+
+/* ==========================================================================
+   Image Hover Effects
+   ========================================================================== */
+
+/* Zoom In */
+.cpg-products-grid.cpg-image-zoom .cpg-product-image img:hover {
+	transform: scale(1.15);
+}
+
+/* Zoom Out */
+.cpg-products-grid.cpg-image-zoom-out .cpg-product-image img:hover {
+	transform: scale(0.85);
+}
+
+/* Rotate */
+.cpg-products-grid.cpg-image-rotate .cpg-product-image img:hover {
+	transform: rotate(5deg) scale(1.1);
+}
+
+/* Blur */
+.cpg-products-grid.cpg-image-blur .cpg-product-image img:hover {
+	filter: blur(3px);
+}
+
+/* Grayscale */
+.cpg-products-grid.cpg-image-grayscale .cpg-product-image img {
+	filter: grayscale(100%);
+}
+
+.cpg-products-grid.cpg-image-grayscale .cpg-product-image img:hover {
+	filter: grayscale(0%);
+}
+
+/* Opacity */
+.cpg-products-grid.cpg-image-opacity .cpg-product-image img:hover {
+	opacity: 0.7;
+}
+
+/* ==========================================================================
+   Sale Badge
+   ========================================================================== */
+
+.cpg-sale-badge {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	background: #ff4444;
+	color: #fff;
+	padding: 5px 12px;
+	border-radius: 4px;
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+	z-index: 2;
+	letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   Wishlist Button
+   ========================================================================== */
+
+.cpg-wishlist-btn {
+	position: absolute;
+	z-index: 3;
+	background: rgba(255, 255, 255, 0.9);
+	border: none;
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	color: #666;
+	padding: 0;
+}
+
+.cpg-wishlist-btn:hover {
+	background: #fff;
+	transform: scale(1.1);
+	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.cpg-wishlist-btn.active {
+	color: #ff4444;
+}
+
+.cpg-wishlist-btn svg {
+	width: 20px;
+	height: 20px;
+}
+
+.cpg-wishlist-btn .wishlist-icon-active {
+	display: none;
+}
+
+.cpg-wishlist-btn.active .wishlist-icon-default {
+	display: none;
+}
+
+.cpg-wishlist-btn.active .wishlist-icon-active {
+	display: block;
+}
+
+/* Wishlist positions */
+.cpg-wishlist-top-left {
+	top: 10px;
+	left: 10px;
+}
+
+.cpg-wishlist-top-right {
+	top: 10px;
+	right: 10px;
+}
+
+.cpg-wishlist-bottom-left {
+	bottom: 10px;
+	left: 10px;
+}
+
+.cpg-wishlist-bottom-right {
+	bottom: 10px;
+	right: 10px;
+}
+
+/* ==========================================================================
+   Product Content
+   ========================================================================== */
+
+.cpg-product-content {
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	flex-grow: 1;
+}
+
+/* ==========================================================================
+   Product Rating
+   ========================================================================== */
+
+.cpg-product-rating {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	font-size: 14px;
+}
+
+.cpg-product-rating .star-rating {
+	font-size: 14px;
+	color: #ffa500;
+}
+
+.cpg-product-rating .star-rating::before {
+	color: #e0e0e0;
+}
+
+.cpg-product-rating .star-rating span::before {
+	color: #ffa500;
+}
+
+/* ==========================================================================
+   Product Title
+   ========================================================================== */
+
+.cpg-product-title {
+	margin: 0;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 1.4;
+}
+
+.cpg-product-title a {
+	color: #333;
+	text-decoration: none;
+	transition: color 0.3s ease;
+}
+
+.cpg-product-title a:hover {
+	color: #007bff;
+}
+
+/* ==========================================================================
+   Product Price
+   ========================================================================== */
+
+.cpg-product-price {
+	font-size: 18px;
+	font-weight: 700;
+	color: #333;
+	margin-top: auto;
+}
+
+.cpg-product-price del {
+	color: #999;
+	font-weight: 400;
+	font-size: 14px;
+	margin-right: 8px;
+}
+
+.cpg-product-price ins {
+	text-decoration: none;
+	color: #ff4444;
+}
+
+/* ==========================================================================
+   Add to Cart Button
+   ========================================================================== */
+
+.cpg-add-to-cart {
+	width: 100%;
+	padding: 12px 20px;
+	background: #007bff;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	position: relative;
+}
+
+.cpg-add-to-cart:hover {
+	background: #0056b3;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.cpg-add-to-cart:active {
+	transform: translateY(0);
+}
+
+.cpg-add-to-cart.loading {
+	pointer-events: none;
+	opacity: 0.7;
+}
+
+.cpg-add-to-cart.loading .button-text {
+	display: none;
+}
+
+.cpg-add-to-cart.loading .button-loader {
+	display: block !important;
+}
+
+.cpg-add-to-cart.added {
+	background: #28a745;
+}
+
+.cpg-add-to-cart.added:hover {
+	background: #218838;
+}
+
+/* ==========================================================================
+   Navigation Arrows
+   ========================================================================== */
+
+.cpg-nav-arrow {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 40px;
+	height: 40px;
+	background: rgba(255, 255, 255, 0.9);
+	border: 1px solid #e0e0e0;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	z-index: 10;
+	color: #333;
+	padding: 0;
+}
+
+.cpg-nav-arrow:hover {
+	background: #fff;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	transform: translateY(-50%) scale(1.1);
+}
+
+.cpg-nav-arrow:disabled {
+	opacity: 0.3;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.cpg-nav-prev {
+	left: -20px;
+}
+
+.cpg-nav-next {
+	right: -20px;
+}
+
+.cpg-nav-arrow svg {
+	width: 24px;
+	height: 24px;
+}
+
+/* Hide arrows when slider is disabled */
+.cpg-products-wrapper:not(:has(.cpg-slider-desktop)) .cpg-nav-arrow,
+.cpg-products-wrapper:not(:has(.cpg-slider-mobile)) .cpg-nav-arrow {
+	display: none;
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+/* Desktop */
+@media (min-width: 1025px) {
+	.cpg-products-grid:not(.cpg-slider-desktop) {
+		grid-template-columns: repeat(var(--columns-desktop, 4), 1fr);
+	}
+	
+	.cpg-slider-mobile:not(.cpg-slider-desktop) .cpg-nav-arrow {
+		display: none;
+	}
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1024px) {
+	.cpg-products-grid:not(.cpg-slider-mobile) {
+		grid-template-columns: repeat(var(--columns-tablet, 3), 1fr);
+	}
+	
+	.cpg-nav-arrow {
+		width: 35px;
+		height: 35px;
+	}
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+	.cpg-products-grid:not(.cpg-slider-mobile) {
+		grid-template-columns: repeat(var(--columns-mobile, 2), 1fr);
+	}
+	
+	.cpg-nav-arrow {
+		width: 32px;
+		height: 32px;
+	}
+	
+	.cpg-nav-prev {
+		left: -10px;
+	}
+	
+	.cpg-nav-next {
+		right: -10px;
+	}
+	
+	.cpg-product-content {
+		padding: 15px;
+		gap: 8px;
+	}
+	
+	.cpg-product-title {
+		font-size: 14px;
+	}
+	
+	.cpg-product-price {
+		font-size: 16px;
+	}
+	
+	.cpg-add-to-cart {
+		padding: 10px 16px;
+		font-size: 13px;
+	}
+	
+	.cpg-sale-badge {
+		font-size: 10px;
+		padding: 4px 8px;
+	}
+	
+	.cpg-wishlist-btn {
+		width: 32px;
+		height: 32px;
+	}
+	
+	.cpg-wishlist-btn svg {
+		width: 18px;
+		height: 18px;
+	}
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+	.cpg-nav-arrow {
+		display: none;
+	}
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+/* Prevent text selection during drag */
+.cpg-products-grid.dragging {
+	user-select: none;
+	cursor: grabbing !important;
+}
+
+.cpg-products-grid.dragging * {
+	cursor: grabbing !important;
+}
+
+/* Grab cursor for draggable sliders */
+.cpg-products-grid.cpg-slider-desktop,
+.cpg-products-grid.cpg-slider-mobile {
+	cursor: grab;
+}
+
+.cpg-products-grid.cpg-slider-desktop:active,
+.cpg-products-grid.cpg-slider-mobile:active {
+	cursor: grabbing;
 }
