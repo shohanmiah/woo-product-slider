@@ -24,6 +24,8 @@ Custom Product Grid Slider is a feature-rich WordPress plugin that seamlessly in
 - Sale Products
 - Best Selling Products
 - Top Rated Products
+- Related Products (for single product pages)
+- Cross-Sell Products (for cart pages)
 - Category Filtering
 - Custom Order By (Date, Title, Price, Popularity, Rating, Random)
 - Ascending/Descending Order
@@ -69,9 +71,10 @@ Custom Product Grid Slider is a feature-rich WordPress plugin that seamlessly in
 - Opacity
 
 #### Typography & Colors
+- **Image**: Alignment, box shadow, spacing, border radius, hover effects
 - **Title**: Typography, colors, word limit, hover color
-- **Price**: Typography, regular and sale price colors
-- **Rating**: Star color, alignment options
+- **Price**: Typography, regular and sale price colors, alignment, box shadow, spacing
+- **Rating**: Star color, alignment, box shadow, spacing
 - **Buttons**: Typography, colors (normal/hover), border radius, padding
 - **Wishlist**: Position (4 corners), icon colors (normal/active), background
 - **Navigation Arrows**: Size, colors (normal/hover), background
