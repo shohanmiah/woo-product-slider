@@ -1,0 +1,46 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+/* Header Styles */
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* Product Slider Styles */
+.product-slider {
+    display: flex;
+    overflow: hidden;
+}
+
+.product-slider .slide {
+    min-width: 100%; /* Make each slide take full width */
+}
+
+/* Button Styles */
+.btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .product-slider {
+        flex-direction: column; /* Stack slides vertically on small screens */
+    }
+}
